@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3f1e8">
+<title>SABC News Live TV | Marketing2Advertising</title>
+<meta name="description" content="Watch SABC News live online on Marketing2Advertising. Live TV player and channel information.">
+<link rel="canonical" href="https://www.marketing2advertising.com/">
+<style>
+:root{--paper:#f3f1e8;--ink:#24231f;--gold:#d8b800;--accent:#ef4444;}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+header{background:#fff;border-bottom:1px solid #e4dfce;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:20px;font-weight:800;letter-spacing:.2px}.brand span{color:var(--gold)}.live{font-size:12px;font-weight:700;background:#fff1f0;color:#b42318;padding:7px 10px;border-radius:20px}
+main{width:min(100% - 24px,1000px);margin:18px auto 30px}.ad{width:100%;min-height:58px;margin:10px auto 16px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;border:1px solid #e8e3d5;border-radius:8px;color:#8b877c;font-size:10px;letter-spacing:1px}
+.ad ins{display:block;width:100%;min-height:58px}.channel-head{display:flex;align-items:center;gap:12px;margin:18px 0 12px}.dot{width:12px;height:12px;border-radius:50%;background:var(--accent);flex:0 0 auto}h1{font-size:clamp(23px,4vw,34px);margin:0}.sub{color:#69665e;font-size:14px;margin:6px 0 14px}
+.player-wrap{background:#fff;border:1px solid #ded8c7;border-radius:12px;padding:10px;box-shadow:0 6px 22px #24231f0c}.screen{position:relative;background:#111;border-radius:8px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}video{display:block;width:100%;height:100%;background:#111;object-fit:contain}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px;text-align:center;color:#fff;background:#111a}.overlay[hidden]{display:none}button{border:0;border-radius:8px;background:var(--gold);color:#24231f;font-size:15px;font-weight:800;padding:12px 20px;cursor:pointer}button:focus-visible{outline:3px solid #fff;outline-offset:3px}.status{font-size:13px;color:#eee;max-width:90%}.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 2px 2px}.channel-pill{font-weight:700;font-size:14px}.hint{font-size:12px;color:#777469;line-height:1.5;margin-top:16px}footer{text-align:center;color:#777469;font-size:12px;padding:16px}
+@media(max-width:560px){header{padding:12px}main{width:calc(100% - 16px);margin-top:10px}.player-wrap{padding:5px}.ad{margin:8px auto 12px}}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
+</head>
+<body>
+<header><div class="brand">M2A <span>LIVE TV</span></div><div class="live">● LIVE CHANNEL</div></header>
+<main>
+<div class="ad" aria-label="Advertisement"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="2115767840" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+<div class="channel-head"><span class="dot"></span><div><h1>SABC News</h1><p class="sub">Watch SABC News live online</p></div></div>
+<section class="player-wrap" aria-label="SABC News video player"><div class="screen"><video id="tv" controls playsinline autoplay></video><div class="overlay" id="overlay"><strong id="status">Preparing SABC News…</strong><button id="start">▶ Watch Live</button></div></div><div class="controls"><span class="channel-pill">SABC News</span><button id="reload" type="button">Reload stream</button></div></section>
+<div class="ad" aria-label="Advertisement"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="2906167922" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+<p class="hint">If playback does not start, press <b>Watch Live</b> or <b>Reload stream</b>. Some broadcasters restrict playback to approved websites or regions, and a stream may be temporarily offline.</p>
+</main><footer>Published by Marketing2Advertising</footer>
+<script>
+(function(){
+ const stream="https://sabconetanw.cdn.mangomolo.com/news/smil:news.stream.smil/master.m3u8", video=document.getElementById('tv'), overlay=document.getElementById('overlay'), status=document.getElementById('status'), start=document.getElementById('start'); let hls=null;
+ function show(text,button=true){status.textContent=text;start.hidden=!button;overlay.hidden=false;}
+ function setup(){if(hls){hls.destroy();hls=null;} video.pause();video.removeAttribute('src');video.load();show('Connecting to SABC News…',false);
+  if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=stream;video.addEventListener('loadedmetadata',()=>{overlay.hidden=true;},{once:true});video.play().then(()=>overlay.hidden=true).catch(()=>show('Press Watch Live to start playback.',true));return;}
+  if(window.Hls&&Hls.isSupported()){hls=new Hls({enableWorker:true,lowLatencyMode:true});hls.loadSource(stream);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>{video.play().then(()=>overlay.hidden=true).catch(()=>show('Press Watch Live to start playback.',true));});hls.on(Hls.Events.ERROR,(_,data)=>{if(data.fatal)show('Stream unavailable or blocked. Try reloading later.',true);});return;}
+  show('This browser does not support this live stream format.',true);
+ }
+ start.addEventListener('click',()=>{if(video.src||hls){video.play().then(()=>overlay.hidden=true).catch(()=>setup());}else setup();});
+ document.getElementById('reload').addEventListener('click',setup); video.addEventListener('playing',()=>overlay.hidden=true); video.addEventListener('error',()=>show('Unable to play this stream right now.',true));
+ setup();
+ document.querySelectorAll('ins.adsbygoogle').forEach(el=>{try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}});
+})();
+</script>
+
+<div class='mobile-hub'>
+
+    
+  <div id='emb99d-footer' style='background:#111; text-align:center; padding:10px 0; font-family:Raleway, Arial, sans-serif;'>
+
+    <a href='/' rel='noopener noreferrer' style='color:#04ff00; margin:0 6px; text-decoration:none;'>Home</a>
+    <span style='color:#fff;'>|</span>
+    
+    <a href='https://www.marketing2advertising.com/p/contact-us.html' rel='noopener noreferrer' style='color:#04ff00; margin:0 6px; text-decoration:none;'>Contact</a>
+    <span style='color:#fff;'>|</span>
+    
+    <a href='https://www.marketing2advertising.com/p/privacy-policy.html' rel='noopener noreferrer' style='color:#04ff00; margin:0 6px; text-decoration:none;' target='_blank'>Privacy</a>
+    <span style='color:#fff;'>|</span>
+    
+    <a href='https://www.marketing2advertising.com/p/affiliate-marketing-and-adsense.html' rel='noopener noreferrer' style='color:#04ff00; margin:0 6px; text-decoration:none;' target='_blank'>Disclosure</a>
+    <span style='color:#fff;'>|</span>
+    
+    <a href='https://www.marketing2advertising.com/p/terms-and-conditions.html' rel='noopener noreferrer' style='color:#04ff00; margin:0 6px; text-decoration:none;' target='_blank'>Terms</a>
+  
+    <p style='color:#aaa; font-size:14px; margin:10px 0 0;'>
+      &#169; Marketing2Advertising. All rights reserved.
+    </p>
+
+</div>
+
+<script>
+(function() {
+  try {
+    if (window.self !== window.top) {
+      var el = document.getElementById(&quot;emb99d-footer&quot;);
+      if (el) el.style.display = &quot;none&quot;;
+    }
+  } catch (e) {
+    // If cross-origin iframe blocks access, still hide it
+    var el = document.getElementById(&quot;emb99d-footer&quot;);
+    if (el) el.style.display = &quot;none&quot;;
+  }
+})();
+</script>
+  
+<div class='mobile-only-bar'/>
+  </div>
+    
+      <script>
+(function() {
+  try {
+    // Detect if page is inside iframe
+    if (window.self !== window.top) {
+      var el = document.getElementById(&quot;e66d-hide&quot;);
+      if (el) el.style.display = &quot;none&quot;;
+    }
+  } catch (e) {
+    // If cross-origin iframe, still hide
+    var el = document.getElementById(&quot;e66d-hide&quot;);
+    if (el) el.style.display = &quot;none&quot;;
+  }
+})();
+</script>
+    
+      
+
+</body></html>
